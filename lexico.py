@@ -88,12 +88,12 @@ def t_NULL(t):
 # (fin de la zona del integrante 1)
 
 
-# ZONA DEL INTEGRANTE 2
+# ZONA DE Fernando
 # <<<APORTE_INTEGRANTE_2>>>
 # (fin de la zona del integrante 2)
 
 
-# ZONA DE SymondSalazar
+# ZONA DE Symond
 # <<<APORTE_INTEGRANTE_3>>>
 # (fin de la zona del integrante 3)
 
