@@ -1,4 +1,4 @@
-# INICIO DEL APORTE - INTEGRANTE 1
+# INICIO DEL APORTE - dbolanos-s
 # Componentes: variables, literales (int, float, string, true/false/null) y comentarios
 reserved_i1 = {'true': 'TRUE', 'false': 'FALSE', 'null': 'NULL'}
 tokens_i1 = ['VARIABLE', 'INT', 'FLOAT', 'STRING', 'TRUE', 'FALSE', 'NULL']
@@ -43,4 +43,4 @@ def t_STRING(t):
 def t_VARIABLE(t):
     r'\$[a-zA-Z_][a-zA-Z0-9_]*'
     return t
-# FIN DEL APORTE - INTEGRANTE 1
+# FIN DEL APORTE - dbolanos-s
