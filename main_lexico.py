@@ -19,14 +19,9 @@ import lexico
 
 
 def usuario_git(valor):
-    if valor:
-        return valor
-    if os.environ.get('GITHUB_USER'):                     # lo define Codespaces
-        return os.environ['GITHUB_USER']
-    try:
-        return subprocess.check_output(['git', 'config', 'user.name'], text=True).strip().replace(' ', '')
-    except Exception:
-        return 'anonimo'
+    if not valor:
+        raise SystemExit("Falta --user: escribe tu usuario de GitHub, por ejemplo --user dbolanos-s")
+    return valor
 
 
 def ruta_log(usuario, carpeta):
