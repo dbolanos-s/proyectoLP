@@ -43,4 +43,19 @@ def t_STRING(t):
 def t_VARIABLE(t):
     r'\$[a-zA-Z_][a-zA-Z0-9_]*'
     return t
+def t_TRUE(t):
+    r'(?i:true)(?![A-Za-z0-9_])'
+    return t
+
+
+def t_FALSE(t):
+    r'(?i:false)(?![A-Za-z0-9_])'
+    return t
+
+
+def t_NULL(t):
+    r'(?i:null)(?![A-Za-z0-9_])'
+    return t
+
+
 # FIN DEL APORTE - dbolanos-s
