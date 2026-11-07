@@ -3,8 +3,8 @@
 # Integrante 1: variables, literales y comentarios
 /* Literales usados:
    int, float, string, bool y null */
-$nombre = "Ana";
-$apellido = 'Pérez';
+$nombre = "Belen";
+$apellido = 'Bolanos';
 $edad = 20;
 $peso = 61.5;
 $activo = true;

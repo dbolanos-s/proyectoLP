@@ -1,21 +1,24 @@
 ANALIZADOR LÉXICO - PHP (PLY)
 Desarrollador : dbolanos-s
 Archivo       : algoritmo1.php
-Fecha y hora  : 06/11/2026 23:37:01
+Fecha y hora  : 07/11/2026 00:24:00
 ======================================================================
-TOKENS RECONOCIDOS (54)
+TOKENS RECONOCIDOS (58)
 Línea  Col  Tipo        Valor
     6    1  VARIABLE    '$nombre'
-    6   11  STRING      '"Ana"'
+    6   11  STRING      '"Belen"'
     7    1  VARIABLE    '$apellido'
-    7   13  STRING      "'Pérez'"
+    7   13  STRING      "'Bolanos'"
     8    1  VARIABLE    '$edad'
     8    9  INT         20
     9    1  VARIABLE    '$peso'
     9    9  FLOAT       61.5
    10    1  VARIABLE    '$activo'
+   10   11  TRUE        'true'
    11    1  VARIABLE    '$graduado'
+   11   13  FALSE       'FALSE'
    12    1  VARIABLE    '$apodo'
+   12   10  NULL        'null'
    13    1  VARIABLE    '$notas'
    13   11  FLOAT       8.5
    13   16  INT         9
@@ -58,40 +61,28 @@ Línea  Col  Tipo        Valor
    30   28  STRING      '"\\n"'
    31    5  VARIABLE    '$activo'
    31   16  VARIABLE    '$apodo'
+   31   27  NULL        'null'
    32   10  STRING      '"Sin apodo registrado\\n"'
 ----------------------------------------------------------------------
-ERRORES LÉXICOS (186)
+ERRORES LÉXICOS (169)
 Error léxico - línea 1, col 1: carácter no reconocido '<'
 Error léxico - línea 1, col 2: carácter no reconocido '?'
 Error léxico - línea 1, col 3: carácter no reconocido 'p'
 Error léxico - línea 1, col 4: carácter no reconocido 'h'
 Error léxico - línea 1, col 5: carácter no reconocido 'p'
 Error léxico - línea 6, col 9: carácter no reconocido '='
-Error léxico - línea 6, col 16: carácter no reconocido ';'
+Error léxico - línea 6, col 18: carácter no reconocido ';'
 Error léxico - línea 7, col 11: carácter no reconocido '='
-Error léxico - línea 7, col 20: carácter no reconocido ';'
+Error léxico - línea 7, col 22: carácter no reconocido ';'
 Error léxico - línea 8, col 7: carácter no reconocido '='
 Error léxico - línea 8, col 11: carácter no reconocido ';'
 Error léxico - línea 9, col 7: carácter no reconocido '='
 Error léxico - línea 9, col 13: carácter no reconocido ';'
 Error léxico - línea 10, col 9: carácter no reconocido '='
-Error léxico - línea 10, col 11: carácter no reconocido 't'
-Error léxico - línea 10, col 12: carácter no reconocido 'r'
-Error léxico - línea 10, col 13: carácter no reconocido 'u'
-Error léxico - línea 10, col 14: carácter no reconocido 'e'
 Error léxico - línea 10, col 15: carácter no reconocido ';'
 Error léxico - línea 11, col 11: carácter no reconocido '='
-Error léxico - línea 11, col 13: carácter no reconocido 'F'
-Error léxico - línea 11, col 14: carácter no reconocido 'A'
-Error léxico - línea 11, col 15: carácter no reconocido 'L'
-Error léxico - línea 11, col 16: carácter no reconocido 'S'
-Error léxico - línea 11, col 17: carácter no reconocido 'E'
 Error léxico - línea 11, col 18: carácter no reconocido ';'
 Error léxico - línea 12, col 8: carácter no reconocido '='
-Error léxico - línea 12, col 10: carácter no reconocido 'n'
-Error léxico - línea 12, col 11: carácter no reconocido 'u'
-Error léxico - línea 12, col 12: carácter no reconocido 'l'
-Error léxico - línea 12, col 13: carácter no reconocido 'l'
 Error léxico - línea 12, col 14: carácter no reconocido ';'
 Error léxico - línea 13, col 8: carácter no reconocido '='
 Error léxico - línea 13, col 10: carácter no reconocido '['
@@ -233,10 +224,6 @@ Error léxico - línea 31, col 14: carácter no reconocido '&'
 Error léxico - línea 31, col 23: carácter no reconocido '='
 Error léxico - línea 31, col 24: carácter no reconocido '='
 Error léxico - línea 31, col 25: carácter no reconocido '='
-Error léxico - línea 31, col 27: carácter no reconocido 'n'
-Error léxico - línea 31, col 28: carácter no reconocido 'u'
-Error léxico - línea 31, col 29: carácter no reconocido 'l'
-Error léxico - línea 31, col 30: carácter no reconocido 'l'
 Error léxico - línea 31, col 31: carácter no reconocido ')'
 Error léxico - línea 31, col 33: carácter no reconocido '{'
 Error léxico - línea 32, col 5: carácter no reconocido 'e'
@@ -248,4 +235,4 @@ Error léxico - línea 33, col 1: carácter no reconocido '}'
 Error léxico - línea 34, col 1: carácter no reconocido '?'
 Error léxico - línea 34, col 2: carácter no reconocido '>'
 ======================================================================
-RESUMEN: 54 tokens, 186 errores
+RESUMEN: 58 tokens, 169 errores
