@@ -11,15 +11,13 @@ import sys
 ap = argparse.ArgumentParser()
 ap.add_argument('integrante', type=int, choices=(1, 2, 3))
 ap.add_argument('--user', default=os.environ.get('GITHUB_USER', ''),
-                help='su usuario de GitHub (reemplaza @usuarioN en los comentarios)')
+                help='opcional (ya no se usa)')
 a = ap.parse_args()
 
 aqui = os.path.dirname(os.path.abspath(__file__))
 ruta_lexico = os.path.join(aqui, '..', 'lexico.py')
 marcador = f'# <<<APORTE_INTEGRANTE_{a.integrante}>>>'
 bloque = open(os.path.join(aqui, f'bloque_integrante{a.integrante}.py'), encoding='utf-8').read()
-if a.user:
-    bloque = bloque.replace(f'@usuario{a.integrante}', f'@{a.user}')
 
 texto = open(ruta_lexico, encoding='utf-8').read()
 if marcador not in texto:

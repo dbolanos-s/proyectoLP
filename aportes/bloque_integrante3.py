@@ -1,7 +1,5 @@
-# =====================================================================
-# INICIO DEL APORTE - INTEGRANTE 3 (@usuario3)
+# INICIO DEL APORTE - INTEGRANTE 3
 # Componentes: palabras reservadas, identificadores, delimitadores y etiquetas <?php ?>
-# =====================================================================
 reserved_i3 = {
     'if': 'IF', 'else': 'ELSE', 'elseif': 'ELSEIF',
     'while': 'WHILE', 'for': 'FOR', 'foreach': 'FOREACH', 'as': 'AS',
@@ -41,6 +39,4 @@ t_LBRACE = r'\{'
 t_RBRACE = r'\}'
 t_LBRACKET = r'\['
 t_RBRACKET = r'\]'
-# =====================================================================
-# FIN DEL APORTE - INTEGRANTE 3 (@usuario3)
-# =====================================================================
+# FIN DEL APORTE - INTEGRANTE 3

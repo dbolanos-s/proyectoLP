@@ -1,7 +1,5 @@
-# =====================================================================
-# INICIO DEL APORTE - INTEGRANTE 2 (@usuario2)
+# INICIO DEL APORTE - INTEGRANTE 2
 # Componentes: operadores aritméticos, de asignación, de comparación y lógicos
-# =====================================================================
 reserved_i2 = {'and': 'AND', 'or': 'OR'}
 tokens_i2 = [
     # aritméticos y concatenación
@@ -41,6 +39,4 @@ t_ASSIGN = r'='
 t_LT = r'<'
 t_GT = r'>'
 t_NOT = r'!'
-# =====================================================================
-# FIN DEL APORTE - INTEGRANTE 2 (@usuario2)
-# =====================================================================
+# FIN DEL APORTE - INTEGRANTE 2
