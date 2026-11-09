@@ -88,14 +88,22 @@ def t_NULL(t):
 # (fin de la zona del integrante 1)
 
 
-# ZONA DE Fernando
 # INICIO DEL APORTE - Fernando
 # Componentes: operadores aritméticos, de asignación, de comparación y lógicos
 tokens_i2 = [
     # aritméticos y concatenación
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MOD', 'POW', 'CONCAT',
+    # asignación, incremento y decremento
+    'ASSIGN', 'PLUSEQ', 'MINUSEQ', 'TIMESEQ', 'DIVEQ', 'CONCATEQ', 'INC', 'DEC',
 ]
 # PLY ordena estas reglas por longitud de la expresión (la más larga primero)
+t_PLUSEQ = r'\+='
+t_MINUSEQ = r'-='
+t_TIMESEQ = r'\*='
+t_DIVEQ = r'/='
+t_CONCATEQ = r'\.='
+t_INC = r'\+\+'
+t_DEC = r'--'
 t_POW = r'\*\*'
 t_PLUS = r'\+'
 t_MINUS = r'-'
@@ -103,6 +111,7 @@ t_TIMES = r'\*'
 t_DIVIDE = r'/'
 t_MOD = r'%'
 t_CONCAT = r'\.'
+t_ASSIGN = r'='
 # FIN DEL APORTE - Fernando
 # (fin de la zona del integrante 2)
 
