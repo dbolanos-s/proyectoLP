@@ -95,6 +95,8 @@ tokens_i2 = [
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MOD', 'POW', 'CONCAT',
     # asignación, incremento y decremento
     'ASSIGN', 'PLUSEQ', 'MINUSEQ', 'TIMESEQ', 'DIVEQ', 'CONCATEQ', 'INC', 'DEC',
+    # comparación
+    'EQ', 'IDENT', 'NEQ', 'NIDENT', 'LT', 'GT', 'LE', 'GE',
 ]
 # PLY ordena estas reglas por longitud de la expresión (la más larga primero)
 t_PLUSEQ = r'\+='
@@ -105,6 +107,12 @@ t_CONCATEQ = r'\.='
 t_INC = r'\+\+'
 t_DEC = r'--'
 t_POW = r'\*\*'
+t_IDENT = r'==='
+t_NIDENT = r'!=='
+t_EQ = r'=='
+t_NEQ = r'!='
+t_LE = r'<='
+t_GE = r'>='
 t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
@@ -112,6 +120,8 @@ t_DIVIDE = r'/'
 t_MOD = r'%'
 t_CONCAT = r'\.'
 t_ASSIGN = r'='
+t_LT = r'<'
+t_GT = r'>'
 # FIN DEL APORTE - Fernando
 # (fin de la zona del integrante 2)
 
