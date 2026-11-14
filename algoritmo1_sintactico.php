@@ -22,6 +22,16 @@ $notas[1] = 9.5;
 $linea = readline();
 $texto = describir($nombre, 5);
 
+for ($i = 0; $activo; $i++) {
+    echo $i, "\n";
+}
+for (;;) {
+    print "infinito";
+}
+for ($j = 10, $k = 0; $edad; $j -= 2, $k += 1) {
+    $total = $j;
+}
+
 if ($activo) {
     echo "Activo\n";
 } elseif ($edad) {

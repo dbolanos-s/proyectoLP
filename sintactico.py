@@ -127,7 +127,7 @@ def p_expression_list(p):
 # ZONA DEL INTEGRANTE 1
 # INICIO DEL APORTE - dbolanos-s
 # Componentes: impresión, estructura de datos (arreglos), estructura de control
-# (if / elseif / else) y definición de funciones con tipos, valores por defecto y retorno
+# (if / elseif / else y ciclo for) y definición de funciones con tipos, valores por defecto y retorno
 precedence_i1 = []
 
 
@@ -201,6 +201,46 @@ def p_else_part(p):
         p[0] = ('else', p[2])
     else:
         p[0] = None
+
+
+
+# estructura de control: for (inicio; condición; paso) { ... }
+# Cada parte puede estar vacía o llevar varias expresiones separadas por coma.
+# Los incrementos $i++ / $i-- se aceptan aquí; fuera del for son sentencias aparte.
+def p_statement_for(p):
+    'statement : FOR LPAREN for_clause SEMI for_clause SEMI for_clause RPAREN block'
+    regla('ciclo for')
+    p[0] = ('for', p[3], p[5], p[7], p[9])
+
+
+def p_for_clause(p):
+    '''for_clause : for_item_list
+                  | empty'''
+    p[0] = p[1] or []
+
+
+def p_for_item_list(p):
+    '''for_item_list : for_item_list COMMA for_item
+                     | for_item'''
+    p[0] = p[1] + [p[3]] if len(p) == 4 else [p[1]]
+
+
+def p_for_item(p):
+    '''for_item : expression
+                 | expression ASSIGN expression
+                 | expression for_assign_op expression
+                 | expression INC
+                 | expression DEC'''
+    p[0] = ('for_item',) + tuple(p[1:])
+
+
+def p_for_assign_op(p):
+    '''for_assign_op : PLUSEQ
+                      | MINUSEQ
+                      | TIMESEQ
+                      | DIVEQ
+                      | CONCATEQ'''
+    p[0] = p[1]
 
 
 # función: function nombre(tipo $a, $b = 0): tipo { ... }   return expr;

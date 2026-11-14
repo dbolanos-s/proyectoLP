@@ -8,3 +8,7 @@ if ($edad) echo "sin llaves";
 $fin = 2;
 5 = $edad;
 echo $nombre;
+for ($i = 0; $i; $i++ {
+    echo $i;
+}
+$fin = 3;
