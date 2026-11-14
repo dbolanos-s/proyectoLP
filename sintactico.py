@@ -371,6 +371,16 @@ def p_statement_compound_assign(p):
     _lado_izquierdo(p, 4, f"'{p[2]}'")
     regla('asignación compuesta')
     p[0] = ('assign_op', p[2], p[1], p[3])
+
+
+# incremento y decremento como sentencias:  $i++;  $i--;
+# (dentro del for ya los acepta for_item, por eso no son expresiones)
+def p_statement_incdec(p):
+    '''statement : expression INC SEMI
+                 | expression DEC SEMI'''
+    _lado_izquierdo(p, 2, f"'{p[2]}'")
+    regla('incremento/decremento')
+    p[0] = ('incdec', p[2], p[1])
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
