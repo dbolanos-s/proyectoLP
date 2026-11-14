@@ -1,0 +1,24 @@
+ANALIZADOR SINTÁCTICO - PHP (PLY yacc)
+Desarrollador : dbolanos-s
+Archivo       : algoritmo1_sintactico.php
+Fecha y hora  : 14/11/2026 14:34:25
+======================================================================
+ESTRUCTURAS RECONOCIDAS
+  acceso a elemento          3
+  arreglo                    3
+  asignación                 11
+  ciclo for                  3
+  condicional if             1
+  definición de función      2
+  else                       1
+  elseif                     2
+  entrada por teclado        1
+  impresión (echo)           4
+  impresión (print)          3
+  llamada a función          2
+  return                     2
+----------------------------------------------------------------------
+ERRORES SINTÁCTICOS (0)
+(sin errores)
+======================================================================
+RESUMEN: 38 estructuras, 0 errores sintácticos
