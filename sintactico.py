@@ -298,6 +298,8 @@ def p_statement_return(p):
 # arreglos y función flecha
 # Precedencia de menor a mayor (or/|| y and/&& comparten token en el léxico)
 precedence_i2 = [
+    ('nonassoc', 'RBRACKET'),           # ']' antes de '=' (desestructuración)
+    ('right', 'ASSIGN'),
     ('left', 'OR'),                     # or  y  ||  (mismo token)
     ('left', 'AND'),                    # and y  &&  (mismo token)
     ('nonassoc', 'EQ', 'IDENT', 'NEQ', 'NIDENT', 'LT', 'GT', 'LE', 'GE'),
@@ -388,6 +390,21 @@ def p_statement_while(p):
     'statement : WHILE LPAREN expression RPAREN block'
     regla('ciclo while')
     p[0] = ('while', p[3], p[5])
+
+
+# estructura de datos: desestructuración de arreglos  [$a, $b] = $lista;  ["x" => $x] = $d;
+# El lado izquierdo se lee con array_items (zona 1).  Ante '=' después de ']' la
+# precedencia (RBRACKET < ASSIGN) elige esta regla en vez de la asignación de la base.
+def p_statement_destructuring(p):
+    'statement : LBRACKET array_items RBRACKET ASSIGN expression SEMI'
+    for item in p[2]:
+        destino = item[2] if item[0] == 'pair' else item
+        if destino[0] not in ('var', 'index', 'array'):
+            sint_errors.append({'tipo': 'sintáctico', 'linea': p.lineno(4), 'columna': _col(p, 4),
+                                'mensaje': 'en la desestructuración solo se aceptan variables'})
+            break
+    regla('desestructuración')
+    p[0] = ('destructure', p[2], p[5])
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
