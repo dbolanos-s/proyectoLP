@@ -1,0 +1,25 @@
+ANALIZADOR SINTÁCTICO - PHP (PLY yacc)
+Desarrollador : fdiazoso
+Archivo       : algoritmo2_sintactico.php
+Fecha y hora  : 14/11/2026 15:58:00
+======================================================================
+ESTRUCTURAS RECONOCIDAS
+  acceso a elemento          6
+  arreglo                    3
+  asignación                 17
+  asignación compuesta       5
+  ciclo while                1
+  comparación                8
+  concatenación              4
+  desestructuración          2
+  expresión aritmética       18
+  expresión lógica           5
+  función flecha             2
+  impresión (echo)           2
+  incremento/decremento      3
+  llamada a función          2
+----------------------------------------------------------------------
+ERRORES SINTÁCTICOS (0)
+(sin errores)
+======================================================================
+RESUMEN: 78 estructuras, 0 errores sintácticos
