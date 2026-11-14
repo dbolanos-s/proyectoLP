@@ -355,6 +355,22 @@ def p_expression_not(p):
     'expression : NOT expression'
     regla('expresión lógica')
     p[0] = ('not', p[2])
+
+
+def _lado_izquierdo(p, n, que):
+    """El lado izquierdo debe ser una variable o un elemento de arreglo."""
+    if p[1][0] not in ('var', 'index'):
+        sint_errors.append({'tipo': 'sintáctico', 'linea': p.lineno(n), 'columna': _col(p, n),
+                            'mensaje': f'{que} solo se aplica a una variable o elemento de arreglo'})
+
+
+# asignación compuesta como sentencia:  $a += 1;  $s .= "x";
+# (usa los operadores de for_assign_op, definidos en la zona 1)
+def p_statement_compound_assign(p):
+    'statement : expression for_assign_op expression SEMI'
+    _lado_izquierdo(p, 4, f"'{p[2]}'")
+    regla('asignación compuesta')
+    p[0] = ('assign_op', p[2], p[1], p[3])
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
