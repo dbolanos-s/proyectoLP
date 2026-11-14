@@ -298,11 +298,14 @@ def p_statement_return(p):
 # arreglos y función flecha
 # Precedencia de menor a mayor (or/|| y and/&& comparten token en el léxico)
 precedence_i2 = [
+    ('left', 'OR'),                     # or  y  ||  (mismo token)
+    ('left', 'AND'),                    # and y  &&  (mismo token)
     ('nonassoc', 'EQ', 'IDENT', 'NEQ', 'NIDENT', 'LT', 'GT', 'LE', 'GE'),
     ('left', 'PLUS', 'MINUS', 'CONCAT'),
     ('left', 'TIMES', 'DIVIDE', 'MOD'),
     ('right', 'UMINUS'),                # menos unario
     ('right', 'POW'),
+    ('right', 'NOT'),
     ('left', 'LBRACKET'),               # $a[0] se agrupa primero
 ]
 
@@ -338,6 +341,20 @@ def p_expression_compare(p):
                   | expression GE expression'''
     regla('comparación')
     p[0] = ('cmp', p[2], p[1], p[3])
+
+
+# conectores lógicos:  &&  ||  and  or  !
+def p_expression_logic(p):
+    '''expression : expression AND expression
+                  | expression OR expression'''
+    regla('expresión lógica')
+    p[0] = ('logic', p[2], p[1], p[3])
+
+
+def p_expression_not(p):
+    'expression : NOT expression'
+    regla('expresión lógica')
+    p[0] = ('not', p[2])
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
