@@ -300,6 +300,7 @@ def p_statement_return(p):
 precedence_i2 = [
     ('nonassoc', 'RBRACKET'),           # ']' antes de '=' (desestructuración)
     ('right', 'ASSIGN'),
+    ('nonassoc', 'FN'),                 # el cuerpo de fn toma toda la expresión
     ('left', 'OR'),                     # or  y  ||  (mismo token)
     ('left', 'AND'),                    # and y  &&  (mismo token)
     ('nonassoc', 'EQ', 'IDENT', 'NEQ', 'NIDENT', 'LT', 'GT', 'LE', 'GE'),
@@ -405,6 +406,21 @@ def p_statement_destructuring(p):
             break
     regla('desestructuración')
     p[0] = ('destructure', p[2], p[5])
+
+
+# función flecha:  fn($x) => $x * 2      fn(int $x): int => $x + 1
+# (reutiliza param_list y return_type de la zona 1)
+def p_expression_arrow_fn(p):
+    'expression : FN LPAREN param_list RPAREN return_type ARROW expression %prec FN'
+    regla('función flecha')
+    p[0] = ('arrow_fn', p[3], p[5], p[7])
+
+
+# llamada a una función guardada en variable:  $doble(4)
+def p_expression_var_call(p):
+    'expression : VARIABLE LPAREN argument_list RPAREN'
+    regla('llamada a función')
+    p[0] = ('call', p[1], p[3])
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
