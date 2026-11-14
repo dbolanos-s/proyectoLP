@@ -298,6 +298,7 @@ def p_statement_return(p):
 # arreglos y función flecha
 # Precedencia de menor a mayor (or/|| y and/&& comparten token en el léxico)
 precedence_i2 = [
+    ('nonassoc', 'EQ', 'IDENT', 'NEQ', 'NIDENT', 'LT', 'GT', 'LE', 'GE'),
     ('left', 'PLUS', 'MINUS', 'CONCAT'),
     ('left', 'TIMES', 'DIVIDE', 'MOD'),
     ('right', 'UMINUS'),                # menos unario
@@ -323,6 +324,20 @@ def p_expression_uminus(p):
     'expression : MINUS expression %prec UMINUS'
     regla('expresión aritmética')
     p[0] = ('neg', p[2])
+
+
+# comparaciones:  ==  ===  !=  !==  <  >  <=  >=
+def p_expression_compare(p):
+    '''expression : expression EQ expression
+                  | expression IDENT expression
+                  | expression NEQ expression
+                  | expression NIDENT expression
+                  | expression LT expression
+                  | expression GT expression
+                  | expression LE expression
+                  | expression GE expression'''
+    regla('comparación')
+    p[0] = ('cmp', p[2], p[1], p[3])
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
