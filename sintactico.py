@@ -292,7 +292,38 @@ def p_statement_return(p):
 
 
 # ZONA DE Fernando
-# <<<APORTE_INTEGRANTE_2>>>
+# INICIO DEL APORTE - fdiazoso
+# Componentes: expresiones aritméticas, de comparación y lógicas con su precedencia,
+# asignación compuesta, incremento/decremento, ciclo while, desestructuración de
+# arreglos y función flecha
+# Precedencia de menor a mayor (or/|| y and/&& comparten token en el léxico)
+precedence_i2 = [
+    ('left', 'PLUS', 'MINUS', 'CONCAT'),
+    ('left', 'TIMES', 'DIVIDE', 'MOD'),
+    ('right', 'UMINUS'),                # menos unario
+    ('right', 'POW'),
+    ('left', 'LBRACKET'),               # $a[0] se agrupa primero
+]
+
+
+# expresiones aritméticas y concatenación:  $a + $b * 2 ** 3 . "txt"
+def p_expression_arith(p):
+    '''expression : expression PLUS expression
+                  | expression MINUS expression
+                  | expression TIMES expression
+                  | expression DIVIDE expression
+                  | expression MOD expression
+                  | expression POW expression
+                  | expression CONCAT expression'''
+    regla('concatenación' if p[2] == '.' else 'expresión aritmética')
+    p[0] = ('binop', p[2], p[1], p[3])
+
+
+def p_expression_uminus(p):
+    'expression : MINUS expression %prec UMINUS'
+    regla('expresión aritmética')
+    p[0] = ('neg', p[2])
+# FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
 
