@@ -381,6 +381,13 @@ def p_statement_incdec(p):
     _lado_izquierdo(p, 2, f"'{p[2]}'")
     regla('incremento/decremento')
     p[0] = ('incdec', p[2], p[1])
+
+
+# estructura de control: while (condición) { ... }
+def p_statement_while(p):
+    'statement : WHILE LPAREN expression RPAREN block'
+    regla('ciclo while')
+    p[0] = ('while', p[3], p[5])
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
