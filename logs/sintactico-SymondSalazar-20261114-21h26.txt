@@ -1,0 +1,35 @@
+ANALIZADOR SINTÁCTICO - PHP (PLY yacc)
+Desarrollador : SymondSalazar
+Archivo       : algoritmo3.php
+Fecha y hora  : 14/11/2026 21:26:14
+======================================================================
+ESTRUCTURAS RECONOCIDAS
+  acceso a elemento          2
+  acceso a propiedad         3
+  arreglo                    4
+  asignación                 10
+  break                      2
+  ciclo foreach              2
+  ciclo while                1
+  comparación                4
+  condicional if             4
+  continue                   2
+  creación de objeto         1
+  definición de clase        1
+  definición de función      1
+  else                       2
+  entrada por teclado        1
+  expresión aritmética       2
+  función flecha             1
+  impresión (echo)           4
+  incremento/decremento      1
+  llamada a función          3
+  llamada a método           1
+  método de clase            1
+  propiedad de clase         1
+  return                     3
+----------------------------------------------------------------------
+ERRORES SINTÁCTICOS (0)
+(sin errores)
+======================================================================
+RESUMEN: 57 estructuras, 0 errores sintácticos
