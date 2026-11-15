@@ -65,7 +65,7 @@ def p_statement_expr(p):
 def p_statement_assign(p):
     'statement : expression ASSIGN expression SEMI'
     # el lado izquierdo debe ser una variable o un elemento de arreglo
-    if p[1][0] not in ('var', 'index'):
+    if p[1][0] not in ('var', 'index', 'property'):
         sint_errors.append({'tipo': 'sintáctico', 'linea': p.lineno(2), 'columna': _col(p, 2),
                             'mensaje': 'el lado izquierdo de la asignación debe ser una variable '
                                        'o un elemento de arreglo'})
@@ -426,7 +426,103 @@ def p_expression_var_call(p):
 
 
 # ZONA DE Symond
-# <<<APORTE_INTEGRANTE_3>>>
+# INICIO DEL APORTE - Symond
+# Componentes: clases, propiedades, métodos, objetos, foreach, break y continue
+precedence_i3 = [
+    ('left', 'OBJECT_ACCESS'),
+]
+
+
+def p_statement_class(p):
+    '''statement : CLASS ID class_extends LBRACE class_members RBRACE'''
+    regla('definición de clase')
+    p[0] = ('class', p[2], p[3], p[5])
+
+
+def p_class_extends(p):
+    '''class_extends : EXTENDS ID
+                     | empty'''
+    p[0] = ('extends', p[2]) if len(p) == 3 else None
+
+
+def p_class_members(p):
+    '''class_members : class_members class_member
+                     | empty'''
+    p[0] = (p[1] or []) + [p[2]] if len(p) == 3 else []
+
+
+def p_class_member_property(p):
+    'class_member : visibility class_property SEMI'
+    regla('propiedad de clase')
+    p[0] = ('property', p[1], p[2])
+
+
+def p_class_property(p):
+    '''class_property : type_name VARIABLE
+                      | type_name VARIABLE ASSIGN expression'''
+    p[0] = (p[2], p[1], p[4] if len(p) == 5 else None)
+
+
+def p_visibility(p):
+    '''visibility : PUBLIC
+                  | PRIVATE
+                  | PROTECTED'''
+    p[0] = p[1]
+
+
+def p_class_member_method(p):
+    'class_member : visibility FUNCTION ID LPAREN param_list RPAREN return_type block'
+    regla('método de clase')
+    p[0] = ('method', p[1], p[3], p[5], p[7], p[8])
+
+
+def p_class_member_method_default_visibility(p):
+    'class_member : FUNCTION ID LPAREN param_list RPAREN return_type block'
+    regla('método de clase')
+    p[0] = ('method', None, p[2], p[4], p[6], p[7])
+
+
+def p_expression_new(p):
+    'expression : NEW ID LPAREN argument_list RPAREN'
+    regla('creación de objeto')
+    p[0] = ('new', p[2], p[4])
+
+
+def p_expression_object_property(p):
+    'expression : expression OBJECT_ACCESS ID'
+    regla('acceso a propiedad')
+    p[0] = ('property', p[1], p[3])
+
+
+def p_expression_object_method(p):
+    'expression : expression OBJECT_ACCESS ID LPAREN argument_list RPAREN'
+    regla('llamada a método')
+    p[0] = ('method_call', p[1], p[3], p[5])
+
+
+def p_statement_foreach(p):
+    '''statement : FOREACH LPAREN expression AS foreach_target RPAREN block
+                 | FOREACH LPAREN expression AS foreach_target ARROW foreach_target RPAREN block'''
+    regla('ciclo foreach')
+    if len(p) == 8:
+        p[0] = ('foreach', p[3], None, p[5], p[7])
+    else:
+        p[0] = ('foreach', p[3], p[5], p[7], p[9])
+
+
+def p_foreach_target(p):
+    'foreach_target : VARIABLE'
+    p[0] = ('var', p[1])
+
+
+def p_statement_break_continue(p):
+    '''statement : BREAK SEMI
+                 | CONTINUE SEMI'''
+    regla('break' if p[1].lower() == 'break' else 'continue')
+    p[0] = (p[1].lower(),)
+
+
+# FIN DEL APORTE - Symond
 # (fin de la zona del integrante 3)
 
 
