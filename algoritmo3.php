@@ -1,8 +1,18 @@
 <?php
 // Algoritmo 3: mayor elemento de una matriz
 // Integrante 3: palabras reservadas, delimitadores y etiquetas
-const FILAS = 2;
+class Contador extends Base {
+    private int $valor = 0;
+
+    public function incrementar(int $pasos): int {
+        $this->valor = $this->valor + $pasos;
+        return $this->valor;
+    }
+}
+
+$filas = 2;
 define('TITULO', 'Matriz');
+$contador = new Contador();
 $matriz = [[3, 8, 1], [9, 4, 7]];
 $mayor = $matriz[0][0];
 
@@ -15,8 +25,14 @@ function mayor_de(int $a, int $b): int {
 }
 
 foreach ($matriz as $indice => $fila) {
+    if ($indice == 1) {
+        continue;
+    }
     foreach ($fila as $valor) {
         $mayor = mayor_de($mayor, $valor);
+    }
+    if ($mayor > 8) {
+        break;
     }
 }
 
@@ -34,5 +50,6 @@ while (true) {
         continue;
     }
 }
-echo 'Filas: ', FILAS, ', iteraciones: ', $i, "\n";
+echo 'Filas: ', $filas, ', iteraciones: ', $i, "\n";
+echo 'Contador: ', $contador->incrementar(2), "\n";
 ?>

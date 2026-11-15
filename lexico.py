@@ -139,6 +139,8 @@ reserved_i3 = {
     'if': 'IF', 'else': 'ELSE', 'elseif': 'ELSEIF',
     'while': 'WHILE', 'for': 'FOR', 'foreach': 'FOREACH', 'as': 'AS',
     'break': 'BREAK', 'continue': 'CONTINUE',
+    'class': 'CLASS', 'new': 'NEW', 'public': 'PUBLIC', 'private': 'PRIVATE',
+    'protected': 'PROTECTED', 'extends': 'EXTENDS',
     'function': 'FUNCTION', 'fn': 'FN', 'return': 'RETURN',
     'echo': 'ECHO', 'print': 'PRINT', 'const': 'CONST', 'array': 'ARRAY',
     'int': 'TYPE', 'float': 'TYPE', 'string': 'TYPE', 'bool': 'TYPE',
@@ -146,6 +148,7 @@ reserved_i3 = {
 tokens_i3 = (
     ['OPEN_TAG', 'CLOSE_TAG', 'ID',
      'SEMI', 'COMMA', 'COLON', 'ARROW',
+     'OBJECT_ACCESS',
      'LPAREN', 'RPAREN', 'LBRACE', 'RBRACE', 'LBRACKET', 'RBRACKET']
     + sorted(set(reserved_i3.values()))
 )
@@ -164,6 +167,7 @@ def t_ID(t):
 
 
 t_ARROW = r'=>'
+t_OBJECT_ACCESS = r'->'
 t_CLOSE_TAG = r'\?>'
 t_SEMI = r';'
 t_COMMA = r','
