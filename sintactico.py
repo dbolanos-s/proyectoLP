@@ -382,10 +382,10 @@ def p_expression_not(p):
 
 
 def _lado_izquierdo(p, n, que):
-    """El lado izquierdo debe ser una variable o un elemento de arreglo."""
-    if p[1][0] not in ('var', 'index'):
+    """El lado izquierdo debe ser una variable, un elemento de arreglo o una propiedad."""
+    if p[1][0] not in ('var', 'index', 'property'):
         sint_errors.append({'tipo': 'sintáctico', 'linea': p.lineno(n), 'columna': _col(p, n),
-                            'mensaje': f'{que} solo se aplica a una variable o elemento de arreglo'})
+                            'mensaje': f'{que} solo se aplica a una variable, elemento de arreglo o propiedad'})
 
 
 # asignación compuesta como sentencia:  $a += 1;  $s .= "x";
@@ -421,7 +421,7 @@ def p_statement_destructuring(p):
     'statement : LBRACKET array_items RBRACKET ASSIGN expression SEMI'
     for item in p[2]:
         destino = item[2] if item[0] == 'pair' else item
-        if destino[0] not in ('var', 'index', 'array'):
+        if destino[0] not in ('var', 'index', 'property', 'array'):
             sint_errors.append({'tipo': 'sintáctico', 'linea': p.lineno(4), 'columna': _col(p, 4),
                                 'mensaje': 'en la desestructuración solo se aceptan variables'})
             break
