@@ -1,0 +1,15 @@
+ANALIZADOR SEMÁNTICO - PHP
+Desarrollador : fdiazoso
+Archivo       : algoritmo2_semantico.php
+Fecha y hora  : 16/11/2026 18:48:40
+======================================================================
+REGLAS VERIFICADAS (veces que se comprobó cada una)
+  R1  Identificadores: variable usada antes de definirse   20
+  R2  Asignación de tipo: constante redefinida             6
+  R3  Operaciones permitidas: tipos de los operandos       13
+  R4  Retorno de funciones: tipo del return                5
+----------------------------------------------------------------------
+ERRORES SEMÁNTICOS (0)
+(sin errores)
+======================================================================
+RESUMEN: 44 verificaciones, 0 errores semánticos
