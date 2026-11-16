@@ -402,7 +402,35 @@ def r2_constante_define(nodo, ctx):
 
 
 # ZONA DE Fernando
-# <<<APORTE_INTEGRANTE_2>>>
+# INICIO DEL APORTE - fdiazoso
+# Reglas: R3 (operaciones permitidas: tipos de los operandos) y
+#         R4 (retorno de funciones: el return coincide con el tipo declarado)
+
+
+# R3: con los tipos conocidos de los operandos se comprueba que la operación tenga sentido:
+#  - las operaciones aritméticas (+ - * / % **) solo se hacen entre números
+#  - la concatenación (.) no admite arreglos
+#  - no se compara una cadena con un número usando < > <= >=
+# Si algún tipo es 'desconocido' no se marca error.
+ARITMETICOS = ('+', '-', '*', '/', '%', '**')
+
+
+@regla_semantica('R3', 'Operaciones permitidas', 'binop', 'cmp')
+def r3_operaciones(nodo, ctx):
+    op, a, b = nodo[1], ctx.tipo_de(nodo[2]), ctx.tipo_de(nodo[3])
+    if 'desconocido' in (a, b):
+        return
+    if nodo[0] == 'binop' and op in ARITMETICOS and (a not in NUMERICOS or b not in NUMERICOS):
+        ctx.error('R3', 'Operaciones permitidas', nodo,
+                  f"la operación '{op}' no está permitida entre {a} y {b}")
+    elif nodo[0] == 'binop' and op == '.' and 'array' in (a, b):
+        ctx.error('R3', 'Operaciones permitidas', nodo,
+                  'la concatenación no admite arreglos')
+    elif (nodo[0] == 'cmp' and op in ('<', '>', '<=', '>=') and 'string' in (a, b)
+          and (a in NUMERICOS or b in NUMERICOS)):
+        ctx.error('R3', 'Operaciones permitidas', nodo,
+                  f"no se puede comparar {a} con {b} usando '{op}'")
+# FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
 
