@@ -1,0 +1,18 @@
+ANALIZADOR SEMÁNTICO - PHP
+Desarrollador : dbolanos-s
+Archivo       : algoritmo1_semantico_error.php
+Fecha y hora  : 16/11/2026 15:57:10
+======================================================================
+REGLAS VERIFICADAS (veces que se comprobó cada una)
+  R1  Identificadores: variable usada antes de definirse   6
+  R2  Asignación de tipo: constante redefinida             5
+----------------------------------------------------------------------
+ERRORES SEMÁNTICOS (6)
+Error semántico [Asignación de tipo] - línea 4: la constante MAX ya fue definida y no se puede modificar
+Error semántico [Asignación de tipo] - línea 6: la constante MIN ya fue definida y no se puede modificar
+Error semántico [Identificadores] - línea 9: la variable $b se usa sin haber sido definida
+Error semántico [Identificadores] - línea 10: la variable $d se usa sin haber sido definida
+Error semántico [Identificadores] - línea 13: la variable $externa se usa sin haber sido definida
+Error semántico [Identificadores] - línea 16: la variable $noexiste se usa sin haber sido definida
+======================================================================
+RESUMEN: 11 verificaciones, 6 errores semánticos
