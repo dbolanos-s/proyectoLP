@@ -430,6 +430,25 @@ def r3_operaciones(nodo, ctx):
           and (a in NUMERICOS or b in NUMERICOS)):
         ctx.error('R3', 'Operaciones permitidas', nodo,
                   f"no se puede comparar {a} con {b} usando '{op}'")
+
+
+# R4: en una función con tipo de retorno declarado, cada return debe devolver ese tipo.
+# Se acepta int donde se declara float, y un número sin tipo exacto donde se declara
+# int o float.  Si la función no declara tipo o el tipo es 'desconocido', no se marca error.
+@regla_semantica('R4', 'Retorno de funciones', 'return')
+def r4_retorno(nodo, ctx):
+    funcion = ctx.funcion_actual
+    if not funcion or funcion['ret'] is None or nodo[1] is None:
+        return
+    declarado, devuelto = normalizar_tipo(funcion['ret']), ctx.tipo_de(nodo[1])
+    if 'desconocido' in (declarado, devuelto):
+        return
+    valido = (devuelto == declarado
+              or (declarado == 'float' and devuelto == 'int')
+              or (devuelto == 'numero' and declarado in ('int', 'float')))
+    if not valido:
+        ctx.error('R4', 'Retorno de funciones', nodo,
+                  f"la función '{funcion['nombre']}' declara {declarado} pero retorna {devuelto}")
 # FIN DEL APORTE - fdiazoso
 # (fin de la zona del integrante 2)
 
