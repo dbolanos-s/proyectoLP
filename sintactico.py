@@ -18,6 +18,7 @@ sint_errors = []                   # errores sintácticos del último análisis
 uso = {}                           # cuántas veces se reconoció cada estructura
 _parser = None
 _lexer = None
+_arbol = None
 
 
 def regla(nombre):
@@ -39,6 +40,8 @@ def p_program(p):
     '''program : OPEN_TAG statement_list CLOSE_TAG
                | OPEN_TAG statement_list'''
     p[0] = ('program', p[2])
+    global _arbol
+    _arbol = p[0]
 
 
 def p_statement_list(p):
@@ -85,7 +88,9 @@ def p_expression_literal(p):
                   | TRUE
                   | FALSE
                   | NULL'''
-    p[0] = ('lit', p[1])
+    tipo = {'INT': 'int', 'FLOAT': 'float', 'STRING': 'string',
+            'TRUE': 'bool', 'FALSE': 'bool', 'NULL': 'null'}[p.slice[1].type]
+    p[0] = ('lit', p[1], tipo)
 
 
 def p_expression_var(p):
@@ -250,6 +255,12 @@ def p_statement_function(p):
     p[0] = ('function', p[2], p[4], p[6], p[7])
 
 
+def p_statement_const(p):
+    'statement : CONST ID ASSIGN expression SEMI'
+    regla('constante')
+    p[0] = ('const_def', p[2], p[4])
+
+
 def p_param_list(p):
     '''param_list : param_items
                   | empty'''
@@ -267,7 +278,14 @@ def p_param(p):
              | type_name VARIABLE ASSIGN expression
              | VARIABLE
              | VARIABLE ASSIGN expression'''
-    p[0] = ('param', p[len(p) - 1] if len(p) == 2 else p[2])
+    if len(p) == 2:
+        p[0] = ('param', p[1], None, None)
+    elif len(p) == 3:
+        p[0] = ('param', p[2], p[1], None)
+    elif len(p) == 4:
+        p[0] = ('param', p[1], None, p[3])
+    else:
+        p[0] = ('param', p[2], p[1], p[4])
 
 
 def p_type_name(p):
@@ -565,3 +583,11 @@ def analizar(codigo):
     lexer = _lexer
     parser.parse(codigo, lexer=lexer)
     return dict(uso), list(sint_errors), list(lexico.lex_errors)
+
+
+def parsear(codigo):
+    """Devuelve (árbol, errores sintácticos, errores léxicos)."""
+    global _arbol
+    _arbol = None
+    analizar(codigo)
+    return _arbol, list(sint_errors), list(lexico.lex_errors)
