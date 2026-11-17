@@ -1,0 +1,8 @@
+ANALIZADOR SEMÁNTICO - algoritmo3_semantico_error.php
+Desarrollador: SymondSalazar
+======================================================================
+ERRORES SEMÁNTICOS (4)
+Error R5 - línea 0: 'break' solo puede usarse dentro de un bucle
+Error R5 - línea 0: foreach requiere un array, pero recibio int
+Error R6 - línea 0: la funcion 'noexiste' no esta definida
+Error R6 - línea 0: 'exige' espera 2 a 2 argumentos, recibio 1

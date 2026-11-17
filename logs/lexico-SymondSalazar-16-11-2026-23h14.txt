@@ -1,0 +1,50 @@
+ANALIZADOR LÉXICO - PHP (PLY)
+Desarrollador : SymondSalazar
+Archivo       : algoritmo3_sintactico_error.php
+Fecha y hora  : 16/11/2026 23:14:37
+======================================================================
+TOKENS RECONOCIDOS (38)
+Línea  Col  Tipo        Valor
+    1    1  OPEN_TAG    '<?php'
+    3    1  CLASS       'class'
+    3    7  ID          'Contador'
+    3   16  LBRACE      '{'
+    4    5  PRIVATE     'private'
+    4   13  TYPE        'int'
+    4   17  VARIABLE    '$valor'
+    4   24  ASSIGN      '='
+    4   26  INT         0
+    4   27  SEMI        ';'
+    5    5  PUBLIC      'public'
+    5   12  FUNCTION    'function'
+    5   21  ID          'incrementar'
+    5   32  LPAREN      '('
+    5   33  TYPE        'int'
+    5   37  VARIABLE    '$pasos'
+    5   43  RPAREN      ')'
+    5   44  COLON       ':'
+    5   46  TYPE        'int'
+    5   50  LBRACE      '{'
+    6    9  RETURN      'return'
+    6   16  VARIABLE    '$this'
+    6   21  OBJECT_ACCESS '->'
+    6   23  ID          'valor'
+    6   28  SEMI        ';'
+    7    5  RBRACE      '}'
+    9    1  FOREACH     'foreach'
+    9    9  LPAREN      '('
+    9   10  VARIABLE    '$datos'
+    9   17  AS          'as'
+    9   20  VARIABLE    '$valor'
+    9   26  RPAREN      ')'
+    9   28  LBRACE      '{'
+   10    5  BREAK       'break'
+   11    5  CONTINUE    'continue'
+   11   13  SEMI        ';'
+   12    1  RBRACE      '}'
+   13    1  CLOSE_TAG   '?>'
+----------------------------------------------------------------------
+ERRORES LÉXICOS (0)
+(sin errores)
+======================================================================
+RESUMEN: 38 tokens, 0 errores
