@@ -1,0 +1,13 @@
+ANALIZADOR SEMÁNTICO - PHP
+Desarrollador : dbolanos-s
+Archivo       : algoritmo1.php
+Fecha y hora  : 16/11/2026 15:58:01
+======================================================================
+REGLAS VERIFICADAS (veces que se comprobó cada una)
+  R1  Identificadores: variable usada antes de definirse   14
+  R2  Asignación de tipo: constante redefinida             1
+----------------------------------------------------------------------
+ERRORES SEMÁNTICOS (0)
+(sin errores)
+======================================================================
+RESUMEN: 15 verificaciones, 0 errores semánticos

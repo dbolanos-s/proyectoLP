@@ -1,0 +1,20 @@
+ANALIZADOR SEMÁNTICO - PHP
+Desarrollador : fdiazoso
+Archivo       : algoritmo2_semantico_error.php
+Fecha y hora  : 16/11/2026 18:53:42
+======================================================================
+REGLAS VERIFICADAS (veces que se comprobó cada una)
+  R1  Identificadores: variable usada antes de definirse   2
+  R3  Operaciones permitidas: tipos de los operandos       4
+  R4  Retorno de funciones: tipo del return                3
+----------------------------------------------------------------------
+ERRORES SEMÁNTICOS (7)
+Error semántico [Operaciones permitidas] - línea 5: la operación '*' no está permitida entre string y int
+Error semántico [Operaciones permitidas] - línea 6: no se puede comparar int con string usando '>'
+Error semántico [Operaciones permitidas] - línea 7: la operación '+' no está permitida entre string y int
+Error semántico [Operaciones permitidas] - línea 8: la concatenación no admite arreglos
+Error semántico [Retorno de funciones] - línea 11: la función 'f' declara int pero retorna string
+Error semántico [Retorno de funciones] - línea 15: la función 'precio' declara float pero retorna array
+Error semántico [Retorno de funciones] - línea 19: la función 'activo' declara bool pero retorna int
+======================================================================
+RESUMEN: 9 verificaciones, 7 errores semánticos

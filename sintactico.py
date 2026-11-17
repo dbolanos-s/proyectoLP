@@ -9,6 +9,7 @@ INICIO / FIN, y no modifica las de los demás.
 Cada regla se escribe como una función p_...(p) cuyo docstring es la gramática.
 """
 import sys
+import types
 import ply.yacc as yacc
 
 import lexico
@@ -18,7 +19,14 @@ sint_errors = []                   # errores sintácticos del último análisis
 uso = {}                           # cuántas veces se reconoció cada estructura
 _parser = None
 _lexer = None
-_arbol = None
+arbol = None                       # árbol sintáctico del último análisis (lo usa semantico.py)
+_lineas = {}                       # id(nodo) -> (nodo, línea donde empieza): ver linea_de()
+
+
+def linea_de(nodo, defecto=0):
+    """Línea del archivo donde empieza un nodo del árbol (para los errores semánticos)."""
+    dato = _lineas.get(id(nodo))
+    return dato[1] if dato and dato[0] is nodo else defecto
 
 
 def regla(nombre):
@@ -40,8 +48,6 @@ def p_program(p):
     '''program : OPEN_TAG statement_list CLOSE_TAG
                | OPEN_TAG statement_list'''
     p[0] = ('program', p[2])
-    global _arbol
-    _arbol = p[0]
 
 
 def p_statement_list(p):
@@ -255,12 +261,6 @@ def p_statement_function(p):
     p[0] = ('function', p[2], p[4], p[6], p[7])
 
 
-def p_statement_const(p):
-    'statement : CONST ID ASSIGN expression SEMI'
-    regla('constante')
-    p[0] = ('const_def', p[2], p[4])
-
-
 def p_param_list(p):
     '''param_list : param_items
                   | empty'''
@@ -278,14 +278,11 @@ def p_param(p):
              | type_name VARIABLE ASSIGN expression
              | VARIABLE
              | VARIABLE ASSIGN expression'''
-    if len(p) == 2:
-        p[0] = ('param', p[1], None, None)
-    elif len(p) == 3:
-        p[0] = ('param', p[2], p[1], None)
-    elif len(p) == 4:
-        p[0] = ('param', p[1], None, p[3])
+    # ('param', nombre, tipo declarado o None, valor por defecto o None)
+    if p.slice[1].type == 'type_name':
+        p[0] = ('param', p[2], p[1], p[4] if len(p) == 5 else None)
     else:
-        p[0] = ('param', p[2], p[1], p[4])
+        p[0] = ('param', p[1], None, p[3] if len(p) == 4 else None)
 
 
 def p_type_name(p):
@@ -305,6 +302,12 @@ def p_statement_return(p):
                  | RETURN SEMI'''
     regla('return')
     p[0] = ('return', p[2] if len(p) == 4 else None)
+
+# constantes: const NOMBRE = expresión;   (define('NOMBRE', valor) es una llamada normal)
+def p_statement_const(p):
+    'statement : CONST ID ASSIGN expression SEMI'
+    regla('constante')
+    p[0] = ('const_def', p[2], p[4])
 # FIN DEL APORTE - dbolanos-s
 # (fin de la zona del integrante 1)
 
@@ -379,10 +382,10 @@ def p_expression_not(p):
 
 
 def _lado_izquierdo(p, n, que):
-    """El lado izquierdo debe ser una variable o un elemento de arreglo."""
-    if p[1][0] not in ('var', 'index'):
+    """El lado izquierdo debe ser una variable, un elemento de arreglo o una propiedad."""
+    if p[1][0] not in ('var', 'index', 'property'):
         sint_errors.append({'tipo': 'sintáctico', 'linea': p.lineno(n), 'columna': _col(p, n),
-                            'mensaje': f'{que} solo se aplica a una variable o elemento de arreglo'})
+                            'mensaje': f'{que} solo se aplica a una variable, elemento de arreglo o propiedad'})
 
 
 # asignación compuesta como sentencia:  $a += 1;  $s .= "x";
@@ -418,7 +421,7 @@ def p_statement_destructuring(p):
     'statement : LBRACKET array_items RBRACKET ASSIGN expression SEMI'
     for item in p[2]:
         destino = item[2] if item[0] == 'pair' else item
-        if destino[0] not in ('var', 'index', 'array'):
+        if destino[0] not in ('var', 'index', 'property', 'array'):
             sint_errors.append({'tipo': 'sintáctico', 'linea': p.lineno(4), 'columna': _col(p, 4),
                                 'mensaje': 'en la desestructuración solo se aceptan variables'})
             break
@@ -565,29 +568,41 @@ def p_error(p):
                         'mensaje': f"token inesperado '{p.value}' ({p.type})"})
 
 
+def _con_lineas(f):
+    """Envuelve una regla p_...: después de ejecutarla guarda la línea de inicio del nodo."""
+    def regla_con_linea(p):
+        f(p)
+        nodo = p[0]
+        if isinstance(nodo, (tuple, list)) and len(p.slice) > 1:
+            _lineas[id(nodo)] = (nodo, p.lineno(1))
+    regla_con_linea.__doc__ = f.__doc__
+    regla_con_linea.__name__ = f.__name__
+    # se conserva la posición original de la regla (PLY ordena las reglas por línea)
+    regla_con_linea.__code__ = regla_con_linea.__code__.replace(
+        co_firstlineno=f.__code__.co_firstlineno, co_filename=f.__code__.co_filename)
+    return regla_con_linea
+
+
 def build_parser():
     global _parser
-    _parser = yacc.yacc(module=sys.modules[__name__], write_tables=False, debug=False,
+    modulo = types.SimpleNamespace(**{
+        nombre: (_con_lineas(valor) if nombre.startswith('p_') and nombre != 'p_error' and valor.__doc__ else valor)
+        for nombre, valor in vars(sys.modules[__name__]).items()
+        if not nombre.startswith('__')})
+    modulo.__file__ = __file__
+    _parser = yacc.yacc(module=modulo, write_tables=False, debug=False,
                         errorlog=yacc.NullLogger())
     return _parser
 
 
 def analizar(codigo):
     """Devuelve (estructuras_usadas, errores_sintacticos, errores_lexicos)."""
+    global _lexer, arbol
     sint_errors.clear()
     uso.clear()
+    _lineas.clear()
     lexico.lex_errors.clear()
     parser = build_parser()
-    global _lexer
     _lexer = lexico.build_lexer()
-    lexer = _lexer
-    parser.parse(codigo, lexer=lexer)
+    arbol = parser.parse(codigo, lexer=_lexer, tracking=True)
     return dict(uso), list(sint_errors), list(lexico.lex_errors)
-
-
-def parsear(codigo):
-    """Devuelve (árbol, errores sintácticos, errores léxicos)."""
-    global _arbol
-    _arbol = None
-    analizar(codigo)
-    return _arbol, list(sint_errors), list(lexico.lex_errors)
