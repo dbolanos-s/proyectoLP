@@ -1,0 +1,14 @@
+ANALIZADOR SINTÁCTICO - PHP (PLY yacc)
+Desarrollador : SymondSalazar
+Archivo       : algoritmo3_sintactico_error.php
+Fecha y hora  : 16/11/2026 23:14:37
+======================================================================
+ESTRUCTURAS RECONOCIDAS
+  acceso a propiedad         1
+  propiedad de clase         1
+  return                     1
+----------------------------------------------------------------------
+ERRORES SINTÁCTICOS (1)
+Error sintáctico - línea 9, col 1: token inesperado 'foreach' (FOREACH)
+======================================================================
+RESUMEN: 3 estructuras, 1 errores sintácticos

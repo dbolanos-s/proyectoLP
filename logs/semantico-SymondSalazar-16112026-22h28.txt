@@ -1,0 +1,5 @@
+ANALIZADOR SEMÁNTICO - algoritmo3_semantico.php
+Desarrollador: SymondSalazar
+======================================================================
+ERRORES SEMÁNTICOS (0)
+(sin errores)

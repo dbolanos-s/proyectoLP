@@ -454,7 +454,40 @@ def r4_retorno(nodo, ctx):
 
 
 # ZONA DE Symond
-# <<<APORTE_INTEGRANTE_3>>>
+# INICIO DEL APORTE - SymondSalazar
+# R5: break/continue solo aparecen dentro de un ciclo y foreach recorre arrays/objetos.
+@regla_semantica('R5', 'Estructuras de control', 'break', 'continue')
+def r5_break_continue(nodo, ctx):
+    if ctx.bucles == 0:
+        ctx.error('R5', 'Estructuras de control', nodo,
+                  f"'{nodo[0]}' solo puede usarse dentro de un bucle")
+
+
+@regla_semantica('R5', 'Estructuras de control', 'foreach')
+def r5_foreach(nodo, ctx):
+    tipo = ctx.tipo_de(nodo[1])
+    if tipo not in ('array', 'object', 'desconocido'):
+        ctx.error('R5', 'Estructuras de control', nodo,
+                  f'foreach requiere un array, pero recibio {tipo}')
+
+
+# R6: una llamada debe apuntar a una función conocida y respetar sus argumentos.
+@regla_semantica('R6', 'Identificadores', 'call')
+def r6_funcion(nodo, ctx):
+    nombre = nodo[1]
+    if nombre.startswith('$') or nombre.lower() in FUNCIONES_PHP:
+        return
+    funcion = ctx.funciones.get(nombre.lower())
+    if not funcion:
+        ctx.error('R6', 'Identificadores', nodo,
+                  f"la funcion '{nombre}' no esta definida")
+        return
+    obligatorios = sum(p[3] is None for p in funcion['params'])
+    total, recibidos = len(funcion['params']), len(nodo[2])
+    if not obligatorios <= recibidos <= total:
+        ctx.error('R6', 'Identificadores', nodo,
+                  f"'{nombre}' espera {obligatorios} a {total} argumentos, recibio {recibidos}")
+
 # (fin de la zona del integrante 3)
 
 
