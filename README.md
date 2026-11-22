@@ -28,6 +28,15 @@ python main_semantico.py algoritmo1.php --user SU_USUARIO_GITHUB
 - Si el archivo tiene errores léxicos o sintácticos, el análisis semántico se omite y el log lo indica, porque sin un árbol correcto el resultado no sería confiable.
 - Si ya existe un log con el mismo nombre en ese minuto, el programa espera al minuto siguiente para no sobrescribirlo.
 
+### Interfaz gráfica
+
+```
+pip install streamlit
+streamlit run app.py
+```
+
+Se abre en el navegador. Permite elegir uno de los algoritmos de ejemplo o pegar código PHP, y muestra en pestañas el resultado de cada fase: tokens y errores léxicos, estructuras y errores sintácticos, y reglas verificadas y errores semánticos (con las líneas con error marcadas).
+
 ### Formato de los logs
 
 | Fase | Nombre del log | Ejemplo |
@@ -44,6 +53,7 @@ python main_semantico.py algoritmo1.php --user SU_USUARIO_GITHUB
 | `sintactico.py` | Analizador sintáctico: gramática y árbol sintáctico |
 | `semantico.py` | Analizador semántico: motor compartido y reglas R1–R6 |
 | `main_lexico.py`, `main_sintactico.py`, `main_semantico.py` | Programas que ejecutan cada fase y escriben el log |
+| `app.py` | Interfaz gráfica (Streamlit) para probar las tres fases |
 | `algoritmo1.php`, `algoritmo2.php`, `algoritmo3.php` | Algoritmos de prueba válidos (uno por integrante) |
 | `*_sintactico.php`, `*_sintactico_error.php` | Pruebas del Avance 2 (válidas y con errores sintácticos) |
 | `*_semantico.php`, `*_semantico_error.php` | Pruebas del Avance 3 (válidas y con errores semánticos) |
