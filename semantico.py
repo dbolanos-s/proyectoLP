@@ -60,7 +60,14 @@ FUNCIONES_PHP = {
     'trim': 'string', 'str_repeat': 'string', 'array_sum': 'numero',
     'array_keys': 'array', 'array_values': 'array', 'array_merge': 'array',
     'sort': 'bool', 'rand': 'int', 'mt_rand': 'int', 'time': 'int', 'date': 'string',
+    # recursos (resource): ficheros y flujos
+    'fopen': 'resource', 'fclose': 'bool', 'fgets': 'string', 'fwrite': 'int',
+    'fputs': 'int', 'feof': 'bool', 'file_get_contents': 'string',
+    'file_put_contents': 'int', 'is_resource': 'bool', 'get_resource_type': 'string',
 }
+
+# Constantes predefinidas de PHP que son recursos (flujos estándar)
+CONSTANTES_RESOURCE = {'STDIN', 'STDOUT', 'STDERR'}
 
 sem_errors = []                    # errores del último análisis
 verificaciones = {}                # cuántas veces trabajó cada regla (para el log)
@@ -174,6 +181,8 @@ class Contexto:
             return FUNCIONES_PHP.get(nombre.lower()) or 'desconocido'
         if t in ('new', 'arrow_fn'):
             return 'object'
+        if t == 'const' and e[1] in CONSTANTES_RESOURCE:
+            return 'resource'
         return 'desconocido'
 
 
